@@ -1,15 +1,9 @@
-import {
-  Controller,
-  Get,
-  Inject,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Controller, Get, Inject, Post } from '@nestjs/common';
 import { Body } from '@nestjs/common/decorators';
 import { IAuthService } from './auth';
 import { creatUserDto } from './dtos/CreateUser.dto';
 import { Routes, Services } from '../utils/constants';
+import { instanceToPlain } from 'class-transformer';
 import { IUserService } from 'src/users/user';
 
 @Controller(Routes.AUTH)
@@ -19,9 +13,8 @@ export class AuthController {
     @Inject(Services.USER) private userService: IUserService,
   ) {}
   @Post('register')
-  @UsePipes(ValidationPipe)
-  registerUser(@Body() creatUserDto: creatUserDto) {
-    this.userService.createUser(creatUserDto);
+  async registerUser(@Body() creatUserDto: creatUserDto) {
+    return instanceToPlain(this.userService.createUser(creatUserDto));
   }
   @Post('login')
   login() {}
