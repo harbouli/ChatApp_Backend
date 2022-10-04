@@ -4,3 +4,12 @@ export type createUserDetails = {
   email: string;
   password: string;
 };
+export type validationUser = {
+  email: string;
+  password: string;
+};
+
+export type FindUserParams = Partial<{
+  id: number;
+  email: string;
+}>;
