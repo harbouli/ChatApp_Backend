@@ -1,10 +1,11 @@
-export type createUserDetails = {
-  firstName: string;
-  lastName: string;
+export type CreateUserDetails = {
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
 };
-export type validationUser = {
+
+export type ValidateUserDetails = {
   email: string;
   password: string;
 };
