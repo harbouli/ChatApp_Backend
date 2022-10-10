@@ -6,7 +6,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ChatParticipant } from './ChatParticipant';
 
 @Entity({ name: 'users' })
 export class User {
@@ -25,8 +24,4 @@ export class User {
   @Column()
   @Exclude()
   password: string;
-
-  @OneToOne(() => ChatParticipant)
-  @JoinColumn()
-  participant: ChatParticipant;
 }

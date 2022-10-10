@@ -1,22 +1,22 @@
 import {
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ChatParticipant } from './ChatParticipant';
+import { User } from './User';
 
 @Entity({ name: 'conversations' })
 export class Conversation {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToMany(() => ChatParticipant, (participant) => participant.conversations)
-  participants: ChatParticipant[];
+  @OneToOne(() => User, { createForeignKeyConstraints: false })
+  @JoinColumn()
+  creator: User;
 
-  //   @Column({ name: 'author_id' })
-  //   authorId: number;
-  //   @Column({ name: 'recipient_id' })
-  //   recipientId: number;
+  @OneToOne(() => User, { createForeignKeyConstraints: false })
+  @JoinColumn()
+  recipient: User;
 }

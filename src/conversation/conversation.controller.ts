@@ -8,11 +8,10 @@ import {
   Param,
 } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/utils/Guards';
-import { IUserService } from 'src/users/user';
 import { Routes, Services } from 'src/utils/constants';
 import { AuthUser } from 'src/utils/decorators';
 import { User } from 'src/utils/typeorm';
-import { IConversationService } from './conversation';
+import { IConversationsService } from './conversation';
 import { CreateConversationDto } from './dtos/createConversation.dto';
 
 @Controller(Routes.CONVERSATION)
@@ -20,7 +19,7 @@ import { CreateConversationDto } from './dtos/createConversation.dto';
 export class ConversationController {
   constructor(
     @Inject(Services.CONVERSATION)
-    private readonly conversationService: IConversationService,
+    private readonly conversationService: IConversationsService,
   ) {}
 
   @Post()
@@ -36,8 +35,8 @@ export class ConversationController {
   }
 
   @Get()
-  getConversation(@AuthUser() user: User) {
-    return this.conversationService.findConversation(user.id);
+  async getConversations(@AuthUser() { id }: User) {
+    return this.conversationService.getConversations(id);
   }
   @Get(':id')
   getConversationById(@Param() id: number) {
