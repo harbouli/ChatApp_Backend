@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ChatParticipant } from './ChatParticipant';
 
 @Entity({ name: 'conversations' })
@@ -7,7 +13,7 @@ export class Conversation {
   id: number;
 
   @ManyToMany(() => ChatParticipant, (participant) => participant.conversations)
-  participant: ChatParticipant;
+  participants: ChatParticipant[];
 
   //   @Column({ name: 'author_id' })
   //   authorId: number;

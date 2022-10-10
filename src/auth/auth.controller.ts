@@ -18,10 +18,7 @@ import { AuthenticatedGuard, LocalAuthGuard } from './utils/Guards';
 
 @Controller(Routes.AUTH)
 export class AuthController {
-  constructor(
-    @Inject(Services.AUTH) private authService: IAuthService,
-    @Inject(Services.USERS) private userService: IUserService,
-  ) {}
+  constructor(@Inject(Services.USERS) private userService: IUserService) {}
 
   @Post('register')
   async registerUser(@Body() createUserDto: CreateUserDto) {

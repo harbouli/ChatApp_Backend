@@ -12,4 +12,5 @@ export interface IParticipantsService {
   createParticipant(
     participant: CreateParticipationDetails,
   ): Promise<ChatParticipant>;
+  findParticipantConversations(id: number);
 }
