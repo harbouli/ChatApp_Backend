@@ -76,6 +76,7 @@ export class ConversationService implements IConversationsService {
       recipient: recipient,
     });
 
-    return this.conversationRepository.save(conversation);
+    await this.conversationRepository.save(conversation);
+    return new HttpException('Create Conversation', HttpStatus.CREATED);
   }
 }

@@ -34,3 +34,7 @@ export interface AuthenticatorRequest extends Request {
 export type CreateParticipationDetails = {
   id: number;
 };
+export type CreateMessageParams = {
+  content: string;
+  conversationId: number;
+};

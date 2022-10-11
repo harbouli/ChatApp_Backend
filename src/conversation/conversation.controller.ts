@@ -14,7 +14,7 @@ import { User } from 'src/utils/typeorm';
 import { IConversationsService } from './conversation';
 import { CreateConversationDto } from './dtos/createConversation.dto';
 
-@Controller(Routes.CONVERSATION)
+@Controller(Routes.CONVERSATIONS)
 @UseGuards(AuthenticatedGuard)
 export class ConversationController {
   constructor(
@@ -39,7 +39,7 @@ export class ConversationController {
     return this.conversationService.getConversations(id);
   }
   @Get(':id')
-  getConversationById(@Param() id: number) {
+  getConversationById(@Param('id') id: number) {
     return this.conversationService.findConversationById(id);
   }
 }
