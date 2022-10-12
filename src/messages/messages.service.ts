@@ -34,13 +34,16 @@ export class MessagesService implements IMessageService {
         HttpStatus.FORBIDDEN,
       );
 
-    conversation.recipient = instanceToPlain(conversation.recipient) as User;
-    conversation.creator = instanceToPlain(conversation.creator) as User;
     const createMessage = this.messageRepository.create({
       content,
       conversation,
       author: instanceToPlain(user),
     });
-    return await this.messageRepository.save(createMessage);
+    const msg = await this.messageRepository.save(createMessage);
+    conversation.lastMessage = msg;
+    const svaeConversation = await this.conversationRepository.save(
+      conversation,
+    );
+    return;
   }
 }
