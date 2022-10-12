@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Conversation } from './Conversation';
 import { User } from './User';
 
@@ -9,7 +15,7 @@ export class Message {
 
   @Column()
   content: string;
-  @Column({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: number;
 
   @ManyToOne(() => User, (user) => user.messages)

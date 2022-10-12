@@ -1,5 +1,6 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { instanceToPlain } from 'class-transformer';
 import { IUserService } from 'src/users/user';
 import { Services } from 'src/utils/constants';
 import { Conversation, User } from 'src/utils/typeorm';
@@ -65,14 +66,17 @@ export class ConversationService implements IConversationsService {
     });
 
     if (existingConversation)
-      throw new HttpException('Conversation exists', HttpStatus.CONFLICT);
+      throw new HttpException(
+        'Conversation Is Already Exists',
+        HttpStatus.CONFLICT,
+      );
     const recipient = await this.userService.findUser({ id: recipientId });
 
     if (!recipient)
       throw new HttpException('Recipient not found', HttpStatus.BAD_REQUEST);
 
     const conversation = this.conversationRepository.create({
-      creator: user,
+      creator: instanceToPlain(user),
       recipient: recipient,
     });
 

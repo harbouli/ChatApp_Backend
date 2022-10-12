@@ -32,7 +32,7 @@ export class AuthController {
   @UseGuards(AuthenticatedGuard)
   @Get('status')
   status(@Req() req: Request, @Res() res: Response) {
-    return res.send(req.user);
+    return res.send(instanceToPlain(req.user));
   }
 
   @Post('logout')

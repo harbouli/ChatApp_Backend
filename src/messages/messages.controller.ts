@@ -17,6 +17,6 @@ export class MessagesController {
     @Body()
     createMessageDto: CreateMessageDto,
   ) {
-    return this.messageService.createMessage(createMessageDto);
+    return this.messageService.createMessage({ ...createMessageDto, user });
   }
 }

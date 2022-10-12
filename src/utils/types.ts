@@ -37,4 +37,5 @@ export type CreateParticipationDetails = {
 export type CreateMessageParams = {
   content: string;
   conversationId: number;
+  user: User;
 };
