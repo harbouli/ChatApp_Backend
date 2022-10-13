@@ -14,6 +14,18 @@ export class MessagesService implements IMessageService {
     @InjectRepository(Conversation)
     private readonly conversationRepository: Repository<Conversation>,
   ) {}
+  async getMessagesByConversationId(
+    conversationId: number,
+  ): Promise<Message[]> {
+    return await this.messageRepository.find({
+      where: {
+        conversation: { id: conversationId },
+      },
+      relations: ['author'],
+      // loadRelationIds:true
+      order: { createdAt: 'DESC' },
+    });
+  }
 
   async createMessage({
     user,
@@ -44,6 +56,6 @@ export class MessagesService implements IMessageService {
     const svaeConversation = await this.conversationRepository.save(
       conversation,
     );
-    return;
+    return createMessage;
   }
 }
