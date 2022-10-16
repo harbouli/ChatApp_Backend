@@ -48,7 +48,7 @@ export class MessagingGateway implements OnGatewayConnection {
         : this.sessions.getUserSocket(4);
     // console.log(`Recipient Is ${recipientSocket.user.email}`);
 
-    // recipientSocket.emit('onMessage', payload);
+    if (recipientSocket) yrecipientSocket.emit('onMessage', payload);
     // this.server.emit('onMessage', payload);
     authorUserSocket.emit('onMessage', payload);
   }
