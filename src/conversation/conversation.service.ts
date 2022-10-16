@@ -15,8 +15,9 @@ export class ConversationService implements IConversationsService {
     @Inject(Services.USERS)
     private readonly userService: IUserService,
   ) {}
-
+  // Get Conversations Method
   async getConversations(id: number): Promise<Conversation[]> {
+    // Query Conversation By User Id
     return this.conversationRepository
       .createQueryBuilder('conversation')
       .leftJoinAndSelect('conversation.lastMessage', 'lastMessage')
@@ -46,13 +47,13 @@ export class ConversationService implements IConversationsService {
 
   async createConversation(user: User, params: CreateConversationDetails) {
     const { recipientId } = params;
-
+    // Validate If The Same Uesr
     if (user.id === params.recipientId)
       throw new HttpException(
         'Cannot Create Conversation',
         HttpStatus.BAD_REQUEST,
       );
-
+    // Checking Existing If Conversation
     const existingConversation = await this.conversationRepository.findOne({
       where: [
         {
@@ -71,16 +72,17 @@ export class ConversationService implements IConversationsService {
         'Conversation Is Already Exists',
         HttpStatus.CONFLICT,
       );
+    // if Recipient is Exist
     const recipient = await this.userService.findUser({ id: recipientId });
 
     if (!recipient)
       throw new HttpException('Recipient not found', HttpStatus.BAD_REQUEST);
-
+    // Create new Conversation
     const conversation = this.conversationRepository.create({
       creator: instanceToPlain(user),
-      recipient: recipient,
+      recipient: instanceToPlain(recipient),
     });
-
+    // Save Conversation
     await this.conversationRepository.save(conversation);
     return new HttpException('Create Conversation', HttpStatus.CREATED);
   }
