@@ -13,11 +13,16 @@ async function bootstrap() {
   const { PORT, COOKIE_SECRET } = process.env;
   const app = await NestFactory.create(AppModule);
   const sessionRepository = getRepository(Session);
+  // Set UP WebSocket Adapter
   const adapter = new WebSocketAdapter(app);
   app.useWebSocketAdapter(adapter);
+  // Globsl Prifix
   app.setGlobalPrefix('api');
+  // Use Golobal ValidationPipe
   app.useGlobalPipes(new ValidationPipe());
+  // enable Cors Origin With Credentials
   app.enableCors({ origin: ['http://localhost:3000'], credentials: true });
+  // Set Up Session Cookie
   app.use(
     session({
       name: 'CHAT_APP_SESSION_ID',
@@ -30,7 +35,7 @@ async function bootstrap() {
       store: new TypeormStore().connect(sessionRepository),
     }),
   );
-
+  // Allowing Passport and Session Middleware
   app.use(passport.initialize());
   app.use(passport.session());
 

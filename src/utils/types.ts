@@ -27,6 +27,7 @@ export type ConversationIdentityType = 'author' | 'recipient';
 export type FindParticipationById = {
   id: number;
 };
+
 export interface AuthenticatorRequest extends Request {
   user: User;
 }
@@ -34,11 +35,13 @@ export interface AuthenticatorRequest extends Request {
 export type CreateParticipationDetails = {
   id: number;
 };
+
 export type CreateMessageParams = {
   content: string;
   conversationId: number;
   user: User;
 };
+
 export type CreateMessageResponse = {
   conversation: Conversation;
   message: Message;
