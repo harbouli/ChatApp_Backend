@@ -53,9 +53,10 @@ export class MessagesService implements IMessageService {
     });
     const msg = await this.messageRepository.save(createMessage);
     conversation.lastMessage = msg;
-    const svaeConversation = await this.conversationRepository.save(
+    const savesConversation = await this.conversationRepository.save(
       conversation,
     );
-    return createMessage;
+    const returnMessage = { ...createMessage, conversation: savesConversation };
+    return returnMessage;
   }
 }
