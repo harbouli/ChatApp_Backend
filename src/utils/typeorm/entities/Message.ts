@@ -13,7 +13,7 @@ export class Message {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column('text', { nullable: true })
   content: string;
   @CreateDateColumn({ name: 'created_at' })
   createdAt: number;

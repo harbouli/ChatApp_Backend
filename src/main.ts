@@ -7,16 +7,20 @@ import { Session } from './utils/typeorm';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { getRepository } from 'typeorm';
+import { WebSocketAdapter } from './gateway/gateway.adapter';
 
 async function bootstrap() {
   const { PORT, COOKIE_SECRET } = process.env;
   const app = await NestFactory.create(AppModule);
   const sessionRepository = getRepository(Session);
+  const adapter = new WebSocketAdapter(app);
+  app.useWebSocketAdapter(adapter);
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({ origin: ['http://localhost:3000'], credentials: true });
   app.use(
     session({
+      name: 'CHAT_APP_SESSION_ID',
       secret: COOKIE_SECRET,
       saveUninitialized: false,
       resave: false,

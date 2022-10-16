@@ -1,4 +1,12 @@
-import { Controller, Inject, Post, Body, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Inject,
+  Post,
+  Body,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { Routes, Services } from 'src/utils/constants';
 import { AuthUser } from 'src/utils/decorators';
 import { User } from 'src/utils/typeorm';
@@ -27,7 +35,15 @@ export class MessagesController {
     return;
   }
   @Get(':conversationId')
-  GetMessagesFromConversation(@Param('conversationId') conversationId: number) {
-    return this.messageService.getMessagesByConversationId(conversationId);
+  async GetMessagesFromConversation(
+    @Param('conversationId', ParseIntPipe) conversationId: number,
+  ) {
+    const messages = await this.messageService.getMessagesByConversationId(
+      conversationId,
+    );
+    return {
+      conversationId,
+      messages,
+    };
   }
 }
