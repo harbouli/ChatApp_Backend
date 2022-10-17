@@ -52,4 +52,8 @@ export class MessagingGateway implements OnGatewayConnection {
     // this.server.emit('onMessage', payload);
     authorUserSocket.emit('onMessage', payload);
   }
+
+  // Handle User Typing Status
+  @SubscribeMessage('onUserTyping')
+  handleUserTypingStatus(@MessageBody() data: any) {}
 }
